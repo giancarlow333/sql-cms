@@ -1,5 +1,6 @@
 // Include packages
 const inquirer = require('inquirer');
+const mysql = require('mysql2');
 
 // User input questions
 const questions = [
