@@ -12,7 +12,7 @@ const db = mysql.createConnection(
       database: process.env.DB_NAME
     }
 );
-/*db.connect(function(err) {
+db.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 }); //https://www.w3schools.com/nodejs/nodejs_mysql.asp */
