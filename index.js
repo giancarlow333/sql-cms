@@ -9,9 +9,12 @@ const db = mysql.createConnection(
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME
-    },
-    console.log(`Connected to the employee_db database.`)
+    }
 );
+db.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
 
 // User input questions
 const questions = [
