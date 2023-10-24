@@ -37,7 +37,7 @@ function init () {
             viewAllDepartments();
         }
         else {console.log("chose something else");}
-        return;
+        //return;
     });
 };
 
