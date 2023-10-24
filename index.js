@@ -42,18 +42,41 @@ init();
 
 // CHOOSER
 function chooser(choice) {
-    if (choice == "view all departments") {
-        console.log("chose \"view all departments\"");
-        viewAllDepartments();
-    }
-    else {
-        console.log("chose something else");
+    switch(choice) {
+        case "view all departments":
+            console.log("chose \"view all departments\"");
+            viewAllDepartments();
+            break;
+        case "view all roles":
+            viewAllRoles();
+            break;
+        case "view all employees":
+            viewAllEmployees();
+            break;
+        default:
+            console.log("chose something else");
     }
 };
 
 // VIEW ALL DEPARTMENTS
 function viewAllDepartments() {
     db.query('SELECT * FROM department', function (err, results) {
+        console.log(results);
+        return;
+    });
+}
+
+// VIEW ALL ROLES
+function viewAllRoles() {
+    db.query('SELECT * FROM role', function (err, results) {
+        console.log(results);
+        return;
+    });
+}
+
+// VIEW ALL EMPLOYEES
+function viewAllEmployees() {
+    db.query('SELECT * FROM employee', function (err, results) {
         console.log(results);
         return;
     });
