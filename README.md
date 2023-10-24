@@ -17,3 +17,7 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 ```
+
+SCHEMA ERRORS:
+https://stackoverflow.com/questions/13257815/key-column-doesnt-exist-in-table-when-trying-to-define-foreign-key
+* PRIMARY KEY autoincrement error: https://stackoverflow.com/questions/25865104/field-id-doesnt-have-a-default-value
