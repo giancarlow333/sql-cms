@@ -1,6 +1,7 @@
 // Include packages
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+require('dotenv').config();
 
 // Connect to database
 const db = mysql.createConnection(
@@ -11,10 +12,10 @@ const db = mysql.createConnection(
       database: process.env.DB_NAME
     }
 );
-db.connect(function(err) {
+/*db.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-});
+}); //https://www.w3schools.com/nodejs/nodejs_mysql.asp */
 
 // User input questions
 const questions = [
@@ -34,7 +35,8 @@ function init () {
             console.log("chose \"view all departments\"");
             viewAllDepartments();
         }
-        console.log("chose something else");
+        else {console.log("chose something else");}
+        return;
     });
 }
 
@@ -45,5 +47,6 @@ init();
 function viewAllDepartments() {
     db.query('SELECT * FROM department', function (err, results) {
         console.log(results);
+        return;
     });
 }
