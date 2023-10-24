@@ -32,17 +32,24 @@ const questions = [
 function init () {
     inquirer.prompt(questions).then((response) => {
         console.log(response);
-        if (response.initialChoice == "view all departments") {
-            console.log("chose \"view all departments\"");
-            viewAllDepartments();
-        }
-        else {console.log("chose something else");}
-        //return;
+        chooser(response.initialChoice);
+        db.end(); // close the database connection
     });
 };
 
 // Initialize the application
 init();
+
+// CHOOSER
+function chooser(choice) {
+    if (choice == "view all departments") {
+        console.log("chose \"view all departments\"");
+        viewAllDepartments();
+    }
+    else {
+        console.log("chose something else");
+    }
+};
 
 // VIEW ALL DEPARTMENTS
 function viewAllDepartments() {
