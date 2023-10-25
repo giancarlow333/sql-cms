@@ -71,6 +71,7 @@ function chooser(choice) {
             break;
         case "quit":
             databaseClose(db);
+            break;
         default:
             console.log("chose something else");
     }
@@ -106,6 +107,36 @@ async function addDepartment() {
         console.log("response: ", response);
         console.log("response.newDept: ", response.newDept);
         db.query(`INSERT INTO department (name) VALUES ("${response.newDept}")`, function (err, results) {
+            console.log(results);
+            if (err) {
+                console.log(err);
+            }
+        });
+    });
+    databaseClose(db); // close the database connection
+}
+
+// ADD A ROLE
+async function addRole() {
+    await inquirer.prompt([
+        {
+            type: 'input',
+            message: 'What is the title of the role?',
+            name: 'newRole',
+        },
+        {
+            type: 'input',
+            message: 'What is its salary?',
+            name: 'newSalary',
+        },
+        {
+            type: 'input',
+            message: 'What is its department? (use id)',
+            name: 'newDept',
+        },
+    ]).then((response) => {
+        console.log("response: ", response);
+        db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`, function (err, results) {
             console.log(results);
             if (err) {
                 console.log(err);
