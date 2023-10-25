@@ -24,7 +24,7 @@ const questions = [
         type: 'list',
         message: 'Please choose from the following options:',
         name: 'initialChoice',
-        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'],
+        choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'quit'],
     }
 ];
 
@@ -69,6 +69,8 @@ function chooser(choice) {
         case "update an employee role":
             updateEmployeeRole();
             break;
+        case "quit":
+            databaseClose(db);
         default:
             console.log("chose something else");
     }
