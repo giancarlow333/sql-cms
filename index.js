@@ -29,16 +29,15 @@ const questions = [
 ];
 
 // Function to initialize the application
-async function init () {
-    await inquirer.prompt(questions).then((response) => {
+function init () {
+    inquirer.prompt(questions).then((response) => {
         console.log(response);
         chooser(response.initialChoice);
     });
-    databaseClose(db); // close the database connection
 };
 
 // function to close the connection
-async function databaseClose(db) {
+function databaseClose(db) {
     db.end();
 };
 
@@ -79,29 +78,29 @@ function chooser(choice) {
 function viewAllDepartments() {
     db.query('SELECT * FROM department', function (err, results) {
         console.log(results);
-        return;
     });
+    databaseClose(db); // close the database connection
 }
 
 // VIEW ALL ROLES
 function viewAllRoles() {
     db.query('SELECT * FROM role', function (err, results) {
         console.log(results);
-        return;
     });
+    databaseClose(db); // close the database connection
 }
 
 // VIEW ALL EMPLOYEES
 function viewAllEmployees() {
     db.query('SELECT * FROM employee', function (err, results) {
         console.log(results);
-        return;
     });
+    databaseClose(db); // close the database connection
 }
 
 // ADD A DEPARTMENT
-function addDepartment() {
-    inquirer.prompt([{ type: 'input', message: 'What is the name of the department?', name: 'newDept', }]).then((response) => {
+async function addDepartment() {
+    await inquirer.prompt([{ type: 'input', message: 'What is the name of the department?', name: 'newDept', }]).then((response) => {
         console.log("response: ", response);
         console.log("response.newDept: ", response.newDept);
         db.query(`INSERT INTO department (name) VALUES ("${response.newDept}")`, function (err, results) {
@@ -111,4 +110,5 @@ function addDepartment() {
             }
         });
     });
+    databaseClose(db); // close the database connection
 }
