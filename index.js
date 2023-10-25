@@ -29,12 +29,17 @@ const questions = [
 ];
 
 // Function to initialize the application
-function init () {
-    inquirer.prompt(questions).then((response) => {
+async function init () {
+    await inquirer.prompt(questions).then((response) => {
         console.log(response);
         chooser(response.initialChoice);
-        db.end(); // close the database connection
     });
+    databaseClose(db); // close the database connection
+};
+
+// function to close the connection
+async function databaseClose(db) {
+    db.end();
 };
 
 // Initialize the application
