@@ -108,10 +108,10 @@ async function viewAllEmployees() {
 
 // ADD A DEPARTMENT
 async function addDepartment() {
-    await inquirer.prompt([{ type: 'input', message: 'What is the name of the department?', name: 'newDept', }]).then((response) => {
-        console.log("response: ", response);
-        console.log("response.newDept: ", response.newDept);
-        db.promise().query(`INSERT INTO department (name) VALUES ("${response.newDept}")`).then( (results) => {
+    await inquirer.prompt([{ type: 'input', message: 'What is the name of the department?', name: 'newDept', }]).then(async function (response) {
+        //console.log("response: ", response);
+        //console.log("response.newDept: ", response.newDept);
+        await db.promise().query(`INSERT INTO department (name) VALUES ("${response.newDept}")`).then( (results) => {
             console.log(results[0]);
         });
     });
@@ -136,9 +136,9 @@ async function addRole() {
             message: 'What is its department? (use id)',
             name: 'newDept',
         },
-    ]).then((response) => {
-        console.log("response: ", response);
-        db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`).then( (results) => {
+    ]).then(async function (response) {
+        //console.log("response: ", response);
+        await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`).then( (results) => {
             console.log(results[0]);
         });
     });
