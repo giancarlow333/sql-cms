@@ -33,8 +33,8 @@ const questions = [
     }
 ];
 
-// Function to initialize the application
-function init () {
+// Main menu
+function mainMenu () {
     inquirer.prompt(questions).then((response) => {
         console.log(response);
         chooser(response.initialChoice);
@@ -47,7 +47,7 @@ function databaseClose(db) {
 };
 
 // Initialize the application
-init();
+mainMenu();
 
 // CHOOSER
 function chooser(choice) {
@@ -85,25 +85,25 @@ function chooser(choice) {
 // VIEW ALL DEPARTMENTS
 async function viewAllDepartments() {
     await db.promise().query('SELECT * FROM department').then( (results) => {
-        console.log(results);
+        console.log(results[0]);
     });
-   init(); // close the database connection
+    mainMenu(); // return to main menu
 }
 
 // VIEW ALL ROLES
 async function viewAllRoles() {
     await db.promise().query('SELECT * FROM role').then( (results) => {
-        console.log(results);
+        console.log(results[0]);
     });
-    //databaseClose(db); // close the database connection
+    mainMenu(); // return to main menu
 }
 
 // VIEW ALL EMPLOYEES
 async function viewAllEmployees() {
     await db.promise().query('SELECT * FROM employee').then( (results) =>  {
-        console.log(results);
+        console.log(results[0]);
     });
-    databaseClose(db); // close the database connection
+    mainMenu(); // return to main menu
 }
 
 // ADD A DEPARTMENT
@@ -112,10 +112,10 @@ async function addDepartment() {
         console.log("response: ", response);
         console.log("response.newDept: ", response.newDept);
         db.promise().query(`INSERT INTO department (name) VALUES ("${response.newDept}")`).then( (results) => {
-            console.log(results);
+            console.log(results[0]);
         });
     });
-    databaseClose(db); // close the database connection
+    mainMenu(); // return to main menu
 }
 
 // ADD A ROLE
@@ -139,8 +139,8 @@ async function addRole() {
     ]).then((response) => {
         console.log("response: ", response);
         db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`).then( (results) => {
-            console.log(results);
+            console.log(results[0]);
         });
     });
-    init();
+    mainMenu(); // return to main menu
 }
