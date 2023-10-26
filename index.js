@@ -4,12 +4,17 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 // Connect to database
-const db = mysql.createConnection(
+const db = mysql.createPool(
     {
       host: 'localhost',
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME
+      database: process.env.DB_NAME,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0
     },
     console.log(`Connected to the employee_db database.`)
 );
@@ -78,24 +83,24 @@ function chooser(choice) {
 };
 
 // VIEW ALL DEPARTMENTS
-function viewAllDepartments() {
-    db.query('SELECT * FROM department', function (err, results) {
+async function viewAllDepartments() {
+    await db.promise().query('SELECT * FROM department').then( (results) => {
         console.log(results);
     });
-    databaseClose(db); // close the database connection
+   init(); // close the database connection
 }
 
 // VIEW ALL ROLES
-function viewAllRoles() {
-    db.query('SELECT * FROM role', function (err, results) {
+async function viewAllRoles() {
+    await db.promise().query('SELECT * FROM role').then( (results) => {
         console.log(results);
     });
-    databaseClose(db); // close the database connection
+    //databaseClose(db); // close the database connection
 }
 
 // VIEW ALL EMPLOYEES
-function viewAllEmployees() {
-    db.query('SELECT * FROM employee', function (err, results) {
+async function viewAllEmployees() {
+    await db.promise().query('SELECT * FROM employee').then( (results) =>  {
         console.log(results);
     });
     databaseClose(db); // close the database connection
@@ -106,11 +111,8 @@ async function addDepartment() {
     await inquirer.prompt([{ type: 'input', message: 'What is the name of the department?', name: 'newDept', }]).then((response) => {
         console.log("response: ", response);
         console.log("response.newDept: ", response.newDept);
-        db.query(`INSERT INTO department (name) VALUES ("${response.newDept}")`, function (err, results) {
+        db.promise().query(`INSERT INTO department (name) VALUES ("${response.newDept}")`).then( (results) => {
             console.log(results);
-            if (err) {
-                console.log(err);
-            }
         });
     });
     databaseClose(db); // close the database connection
@@ -136,12 +138,9 @@ async function addRole() {
         },
     ]).then((response) => {
         console.log("response: ", response);
-        db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`, function (err, results) {
+        db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`).then( (results) => {
             console.log(results);
-            if (err) {
-                console.log(err);
-            }
         });
     });
-    databaseClose(db); // close the database connection
+    init();
 }
