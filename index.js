@@ -32,7 +32,6 @@ const questions = [
 // Main menu
 function mainMenu () {
     inquirer.prompt(questions).then((response) => {
-        console.log(response);
         chooser(response.initialChoice);
     });
 };
@@ -143,7 +142,7 @@ async function addRole() {
             }
         };
         await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${deptid})`).then( (results) => {
-            console.log(results[0]);
+            console.log("Role added!");
         });
     });
     mainMenu(); // return to main menu
@@ -198,7 +197,7 @@ async function addEmployee() {
         },
     ]).then(async function (response) {
         await db.promise().query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${response.newFirst}", "${response.newLast}", ${response.newRole}, ${response.newMgr})`).then( (results) => {
-            console.log(results[0]);
+            console.log("Employee added!");
         });
     });
     mainMenu(); // return to main menu
@@ -243,7 +242,7 @@ async function updateEmployeeRole() {
         },
     ]).then(async function (response) {
         await db.promise().query(`UPDATE employee SET role_id = ${response.newRole} WHERE id = ${response.newEmp}`).then( (results) => {
-            console.log(results[0]);
+            console.log("Role updated!");
         });
     });
     mainMenu(); // return to main menu

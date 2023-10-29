@@ -25,3 +25,4 @@ https://stackoverflow.com/questions/13257815/key-column-doesnt-exist-in-table-wh
 * Add value: https://stackoverflow.com/questions/65415706/how-to-get-index-value-of-choice-made-with-inquirer
 Console.Table: https://developer.mozilla.org/en-US/docs/Web/API/console/table;
 padend: https://stackoverflow.com/questions/19837697/node-js-formatted-console-output
+Self join https://www.mysqltutorial.org/mysql-self-join/, https://www.w3schools.com/mysql/mysql_join_self.asp
