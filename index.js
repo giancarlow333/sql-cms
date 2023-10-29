@@ -151,11 +151,11 @@ async function addRole() {
 
 // ADD AN EMPLOYEE
 async function addEmployee() {
+    // query db for all roles and employees
     let rolesResults = [];
     await db.promise().query('SELECT * FROM role').then( (results) => {
         rolesResults = results[0];
     });
-    console.log(rolesResults);
     let otheremps = [];
     await db.promise().query('SELECT * FROM employee').then( (results) => {
         otheremps = results[0];
@@ -166,7 +166,7 @@ async function addEmployee() {
         roles.push({ name: rolesResults[i].title, value: i+1 });
     }
     // managers string, including NULL
-    let managers = [ { name: "None", value: 0 } ];
+    let managers = [ { name: "None", value: "NULL" } ];
     for (let i = 0; i < otheremps.length; i++) {
         let fullName = `${otheremps[i].first_name} ${otheremps[i].last_name}`;
         let valueToBe = i + 1;
@@ -205,11 +205,9 @@ async function addEmployee() {
         };
         let mgrid = response.newMgr;
         console.log("response.newMgr.value: ", mgrid);
-        /*await db.promise().query(`INSERT INTO employee
-        (first_name, last_name, role_id, manager_id)
-    VALUES ("${response.newFirst}", "${response.newLast}", ${roleid}, ${response.newMgr})`).then( (results) => {
+        await db.promise().query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${response.newFirst}", "${response.newLast}", ${response.newRole}, ${response.newMgr})`).then( (results) => {
             console.log(results[0]);
-        });*/
+        });
     });
     mainMenu(); // return to main menu
 }
