@@ -89,7 +89,7 @@ async function viewAllDepartments() {
 // VIEW ALL ROLES
 async function viewAllRoles() {
     await db.promise().query('SELECT * FROM role').then( (results) => {
-        console.log(results[0]);
+        printRoles(results[0]);
     });
     mainMenu(); // return to main menu
 }
@@ -249,12 +249,21 @@ async function updateEmployeeRole() {
     mainMenu(); // return to main menu
 }
 
-
-
+/*
+ * PRINT FUNCTIONS
+ */
 function printDepartments(data) {
     console.log("id   name");
     console.log("--   ------------------------------");
     for (let i = 0; i < data.length; i++) {
         console.log(data[i].id.toString().padEnd(2), " ", data[i].name.trim());
+    }
+}
+
+function printRoles(data) {
+    console.log("id   title                            department                       salary");
+    console.log("--   ------------------------------   ------------------------------   ------");
+    for (let i = 0; i < data.length; i++) {
+        console.log(data[i].id.toString().padEnd(2), " ", data[i].title.padEnd(30), " $", data[i].salary);
     }
 }
