@@ -120,6 +120,10 @@ async function addDepartment() {
 
 // ADD A ROLE
 async function addRole() {
+    let depts = [];
+    await db.promise().query('SELECT * FROM department').then( (results) => {
+        depts = results[0];
+    });
     await inquirer.prompt([
         {
             type: 'input',
@@ -132,12 +136,13 @@ async function addRole() {
             name: 'newSalary',
         },
         {
-            type: 'input',
+            type: 'list',
             message: 'What is its department? (use id)',
             name: 'newDept',
+            choices: depts,
         },
     ]).then(async function (response) {
-        //console.log("response: ", response);
+        console.log("response: ", response);
         await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${response.newDept})`).then( (results) => {
             console.log(results[0]);
         });
