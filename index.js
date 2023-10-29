@@ -148,3 +148,56 @@ async function addRole() {
     });
     mainMenu(); // return to main menu
 }
+
+// ADD AN EMPLOYEE
+async function addEmployee() {
+    let roles = [];
+    await db.promise().query('SELECT * FROM role').then( (results) => {
+        roles = results[0];
+    });
+    let otheremps = [];
+    await db.promise().query('SELECT * FROM employee').then( (results) => {
+        otheremps = results[0];
+    });
+    // managers string, including NULL
+    let managers = [ "None" ];
+    for (let i = 0; i < otheremps.length; i++) {
+        managers.push(`${otheremps[i].first_name} ${otheremps[i].last_name}`);
+    }
+    //console.log("managers: ", managers);
+    await inquirer.prompt([
+        {
+            type: 'input',
+            message: 'What is the employees first name?',
+            name: 'newFirst',
+        },
+        {
+            type: 'input',
+            message: 'What is their last name?',
+            name: 'newLast',
+        },
+        {
+            type: 'list',
+            message: 'What is their role?',
+            name: 'newRole',
+            choices: roles,
+        },
+        {
+            type: 'list',
+            message: 'Who is their manager?',
+            name: 'newMgr',
+            choices: managers,
+        },
+    ]).then(/*async function (response) {
+        let roleid = 0;
+        for (let i = 0; i < depts.length; i++) {
+            if (response.newDept == depts[i].name) {
+                deptid = i + 1;
+            }
+        };
+        await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${deptid})`).then( (results) => {
+            console.log(results[0]);
+        });
+    }*/);
+    mainMenu(); // return to main menu
+}
