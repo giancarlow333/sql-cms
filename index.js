@@ -172,7 +172,7 @@ async function addEmployee() {
         let valueToBe = i + 1;
         managers.push({ name: fullName, value: valueToBe });
     }
-    //console.log("managers: ", managers);
+    // Prompt
     await inquirer.prompt([
         {
             type: 'input',
@@ -227,7 +227,7 @@ async function updateEmployeeRole() {
         let valueToBe = i + 1;
         employees.push({ name: fullName, value: valueToBe });
     }
-    //console.log("managers: ", managers);
+    // PROMPT
     await inquirer.prompt([
         {
             type: 'list',
