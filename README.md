@@ -1,3 +1,9 @@
+# SQL CMS
+
+This program is a command-line **content management system** that provides an interface for a MySQL employee database.  It uses [Node.js](https://nodejs.org/en), [Inquirer](https://www.npmjs.com/package/inquirer), [dotenv](https://www.npmjs.com/package/dotenv), and [MySQL2](https://www.npmjs.com/package/mysql2).
+
+## Program Logic
+
 ```
 GIVEN a command-line application that accepts user input
 WHEN I start the application
@@ -18,11 +24,19 @@ WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 ```
 
-SCHEMA ERRORS:
-https://stackoverflow.com/questions/13257815/key-column-doesnt-exist-in-table-when-trying-to-define-foreign-key
-* PRIMARY KEY autoincrement error: https://stackoverflow.com/questions/25865104/field-id-doesnt-have-a-default-value
+## Usage
 
-* Add value: https://stackoverflow.com/questions/65415706/how-to-get-index-value-of-choice-made-with-inquirer
-Console.Table: https://developer.mozilla.org/en-US/docs/Web/API/console/table;
-padend: https://stackoverflow.com/questions/19837697/node-js-formatted-console-output
-Self join https://www.mysqltutorial.org/mysql-self-join/, https://www.w3schools.com/mysql/mysql_join_self.asp
+From the command line, run the commands `npm install` and `node index.js`.  The typical program flow is shown in a video available [from this link]().
+
+Here is a screenshot showing a terminal in which the program is running:
+
+## Code Sources
+
+* I encountered some errors with the schemas regarding foreign keys and primary keys, which were cleared up by [this StackOverflow thread](https://stackoverflow.com/questions/13257815/key-column-doesnt-exist-in-table-when-trying-to-define-foreign-key) and [this one](https://stackoverflow.com/questions/25865104/field-id-doesnt-have-a-default-value).
+* The code to get an id number from an inquirer selection, as opposed to a string, comes from [this StackOverflow thread](https://stackoverflow.com/questions/65415706/how-to-get-index-value-of-choice-made-with-inquirer), via user [Aleksandar](https://stackoverflow.com/users/4688612/aleksandar).
+* I learned about using `console.table` from [the Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/API/console/table).
+* I learned about self joins (to get the manager's *names* and not just their ids when showing all employees) via [MySQLTutorial.Org](https://www.mysqltutorial.org/mysql-self-join/), and [W3Schools](https://www.w3schools.com/mysql/mysql_join_self.asp) also helped with syntax.  The latter's [column alias documentation](https://www.w3schools.com/mysql/mysql_alias.asp) was also informative.
+
+---
+
+(c) 2023 Giancarlo Whitaker
