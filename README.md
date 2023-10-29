@@ -23,3 +23,4 @@ https://stackoverflow.com/questions/13257815/key-column-doesnt-exist-in-table-wh
 * PRIMARY KEY autoincrement error: https://stackoverflow.com/questions/25865104/field-id-doesnt-have-a-default-value
 
 * Add value: https://stackoverflow.com/questions/65415706/how-to-get-index-value-of-choice-made-with-inquirer
+Console.Table: https://developer.mozilla.org/en-US/docs/Web/API/console/table; 

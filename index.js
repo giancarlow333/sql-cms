@@ -81,7 +81,7 @@ function chooser(choice) {
 // VIEW ALL DEPARTMENTS
 async function viewAllDepartments() {
     await db.promise().query('SELECT * FROM department').then( (results) => {
-        console.table(results[0]);
+        printDepartments(results[0]);
     });
     mainMenu(); // return to main menu
 }
@@ -252,9 +252,9 @@ async function updateEmployeeRole() {
 
 
 function printDepartments(data) {
-    console.log("id name");
-    console.log("-- ------------------------------");
+    console.log("id   name");
+    console.log("--   ------------------------------");
     for (let i = 0; i < data.length; i++) {
-        console.log(data[i].id.toString(), " ", data[i].name.trim());
+        console.log(data[i].id.toString().padEnd(2), " ", data[i].name.trim());
     }
 }
