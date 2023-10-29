@@ -151,18 +151,26 @@ async function addRole() {
 
 // ADD AN EMPLOYEE
 async function addEmployee() {
-    let roles = [];
+    let rolesResults = [];
     await db.promise().query('SELECT * FROM role').then( (results) => {
-        roles = results[0];
+        rolesResults = results[0];
     });
+    console.log(rolesResults);
     let otheremps = [];
     await db.promise().query('SELECT * FROM employee').then( (results) => {
         otheremps = results[0];
     });
+    // Role strings
+    let roles = [];
+    for (let i = 0; i < rolesResults.length; i++) {
+        roles.push({ name: rolesResults[i].title, value: i+1 });
+    }
     // managers string, including NULL
-    let managers = [ "None" ];
+    let managers = [ { name: "None", value: 0 } ];
     for (let i = 0; i < otheremps.length; i++) {
-        managers.push(`${otheremps[i].first_name} ${otheremps[i].last_name}`);
+        let fullName = `${otheremps[i].first_name} ${otheremps[i].last_name}`;
+        let valueToBe = i + 1;
+        managers.push({ name: fullName, value: valueToBe });
     }
     //console.log("managers: ", managers);
     await inquirer.prompt([
@@ -188,16 +196,20 @@ async function addEmployee() {
             name: 'newMgr',
             choices: managers,
         },
-    ]).then(/*async function (response) {
+    ]).then(async function (response) {
         let roleid = 0;
-        for (let i = 0; i < depts.length; i++) {
-            if (response.newDept == depts[i].name) {
-                deptid = i + 1;
+        for (let i = 0; i < roles.length; i++) {
+            if (response.newRole == roles[i].title) {
+                roleid = i + 1;
             }
         };
-        await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${deptid})`).then( (results) => {
+        let mgrid = response.newMgr;
+        console.log("response.newMgr.value: ", mgrid);
+        /*await db.promise().query(`INSERT INTO employee
+        (first_name, last_name, role_id, manager_id)
+    VALUES ("${response.newFirst}", "${response.newLast}", ${roleid}, ${response.newMgr})`).then( (results) => {
             console.log(results[0]);
-        });
-    }*/);
+        });*/
+    });
     mainMenu(); // return to main menu
 }
