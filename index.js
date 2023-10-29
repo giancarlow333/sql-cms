@@ -144,10 +144,18 @@ async function addRole() {
     ]).then(async function (response) {
         console.log("response: ", response);
         let deptid = 0;
-        await db.promise().query(`SELECT id FROM department WHERE Name = '${response.newDept}'`).then((result) => {
+        /*await db.promise().query(`SELECT id FROM department WHERE Name = '${response.newDept}'`).then((result) => {
             deptid = result[0].id;
             console.log("deptid: ", deptid);
-        });
+        });*/
+        console.log("response.newDept: ", response.newDept);
+        for (let i = 0; i < depts.length; i++) {
+            console.log("depts[i]: ", depts[i].name);
+            if (response.newDept == depts[i].name) {
+                deptid = i + 1;
+            }
+        };
+        console.log("deptid: ", deptid);
         await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${deptid})`).then( (results) => {
             console.log(results[0]);
         });
