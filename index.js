@@ -80,24 +80,24 @@ function chooser(choice) {
 
 // VIEW ALL DEPARTMENTS
 async function viewAllDepartments() {
-    await db.promise().query('SELECT * FROM department').then( (results) => {
-        printDepartments(results[0]);
+    await db.promise().query('SELECT name FROM department').then( (results) => {
+        console.table(results[0]);
     });
     mainMenu(); // return to main menu
 }
 
 // VIEW ALL ROLES
 async function viewAllRoles() {
-    await db.promise().query('SELECT * FROM role').then( (results) => {
-        printRoles(results[0]);
+    await db.promise().query('SELECT role.title, role.salary, department.name AS department FROM role INNER JOIN department on role.department_id=department.id').then( (results) => {
+        console.table(results[0]);
     });
     mainMenu(); // return to main menu
 }
 
 // VIEW ALL EMPLOYEES
 async function viewAllEmployees() {
-    await db.promise().query('SELECT * FROM employee').then( (results) =>  {
-        console.log(results[0]);
+    await db.promise().query('SELECT employee.first_name, employee.last_name, role.title FROM employee INNER JOIN role ON employee.role_id=role.id').then( (results) =>  {
+        console.table(results[0]);
     });
     mainMenu(); // return to main menu
 }
@@ -247,23 +247,4 @@ async function updateEmployeeRole() {
         });
     });
     mainMenu(); // return to main menu
-}
-
-/*
- * PRINT FUNCTIONS
- */
-function printDepartments(data) {
-    console.log("id   name");
-    console.log("--   ------------------------------");
-    for (let i = 0; i < data.length; i++) {
-        console.log(data[i].id.toString().padEnd(2), " ", data[i].name.trim());
-    }
-}
-
-function printRoles(data) {
-    console.log("id   title                            department                       salary");
-    console.log("--   ------------------------------   ------------------------------   ------");
-    for (let i = 0; i < data.length; i++) {
-        console.log(data[i].id.toString().padEnd(2), " ", data[i].title.padEnd(30), " $", data[i].salary);
-    }
 }
