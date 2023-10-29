@@ -48,7 +48,6 @@ mainMenu();
 function chooser(choice) {
     switch(choice) {
         case "view all departments":
-            console.log("chose \"view all departments\"");
             viewAllDepartments();
             break;
         case "view all roles":
@@ -219,12 +218,19 @@ async function updateEmployeeRole() {
     for (let i = 0; i < rolesResults.length; i++) {
         roles.push({ name: rolesResults[i].title, value: i+1 });
     }
-    // employees string, including NULL
-    let employees = [ { name: "None", value: "NULL" } ];
+    // employees string
+    let employees = [];
     for (let i = 0; i < otheremps.length; i++) {
         let fullName = `${otheremps[i].first_name} ${otheremps[i].last_name}`;
         let valueToBe = i + 1;
         employees.push({ name: fullName, value: valueToBe });
+    }
+    // managers string, including NULL
+    let managers = [ { name: "None", value: "NULL" } ];
+    for (let i = 0; i < otheremps.length; i++) {
+        let fullName = `${otheremps[i].first_name} ${otheremps[i].last_name}`;
+        let valueToBe = i + 1;
+        managers.push({ name: fullName, value: valueToBe });
     }
     // PROMPT
     await inquirer.prompt([
@@ -240,8 +246,14 @@ async function updateEmployeeRole() {
             name: 'newRole',
             choices: roles,
         },
+        {
+            type: 'list',
+            message: 'Who is their new manager?',
+            name: 'newMgr',
+            choices: managers,
+        },
     ]).then(async function (response) {
-        await db.promise().query(`UPDATE employee SET role_id = ${response.newRole} WHERE id = ${response.newEmp}`).then( (results) => {
+        await db.promise().query(`UPDATE employee SET role_id = ${response.newRole}, manager_id = ${response.newMgr} WHERE id = ${response.newEmp}`).then( (results) => {
             console.log("Role updated!");
         });
     });
