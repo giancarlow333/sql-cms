@@ -18,10 +18,6 @@ const db = mysql.createPool(
     },
     console.log(`Connected to the employee_db database.`)
 );
-/*db.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-}); //https://www.w3schools.com/nodejs/nodejs_mysql.asp */
 
 // User input questions
 const questions = [
@@ -109,8 +105,6 @@ async function viewAllEmployees() {
 // ADD A DEPARTMENT
 async function addDepartment() {
     await inquirer.prompt([{ type: 'input', message: 'What is the name of the department?', name: 'newDept', }]).then(async function (response) {
-        //console.log("response: ", response);
-        //console.log("response.newDept: ", response.newDept);
         await db.promise().query(`INSERT INTO department (name) VALUES ("${response.newDept}")`).then( (results) => {
             console.log(results[0]);
         });
@@ -142,20 +136,12 @@ async function addRole() {
             choices: depts,
         },
     ]).then(async function (response) {
-        console.log("response: ", response);
         let deptid = 0;
-        /*await db.promise().query(`SELECT id FROM department WHERE Name = '${response.newDept}'`).then((result) => {
-            deptid = result[0].id;
-            console.log("deptid: ", deptid);
-        });*/
-        console.log("response.newDept: ", response.newDept);
         for (let i = 0; i < depts.length; i++) {
-            console.log("depts[i]: ", depts[i].name);
             if (response.newDept == depts[i].name) {
                 deptid = i + 1;
             }
         };
-        console.log("deptid: ", deptid);
         await db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES ("${response.newRole}", ${response.newSalary}, ${deptid})`).then( (results) => {
             console.log(results[0]);
         });
