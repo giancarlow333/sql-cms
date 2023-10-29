@@ -26,9 +26,11 @@ THEN I am prompted to select an employee to update and their new role and this i
 
 ## Usage
 
-From the command line, run the commands `npm install` and `node index.js`.  The typical program flow is shown in a video available [from this link]().
+From the command line, run the commands `npm install` and `node index.js`.  The typical program flow is shown in a video available [from this link](https://drive.google.com/file/d/1TP5GTEaWRRQzGiwHhIc61fz529IbpcKv/view?usp=drive_link), and also in the assets folder.
 
 Here is a screenshot showing a terminal in which the program is running:
+
+![A terminal in which the program was invoked with the command node index.js](./assets/sql_cms_in_use.png)
 
 ## Code Sources
 
