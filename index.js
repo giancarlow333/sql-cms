@@ -96,7 +96,7 @@ async function viewAllRoles() {
 
 // VIEW ALL EMPLOYEES
 async function viewAllEmployees() {
-    await db.promise().query('SELECT A.id, A.first_name, A.last_name, role.title, role.salary, department.name AS department, CONCAT_WS(" ", B.first_name, B.last_name) AS manager FROM employee A INNER JOIN employee B ON A.manager_id=B.id INNER JOIN role ON A.role_id=role.id INNER JOIN department ON role.department_id=department.id').then( (results) =>  {
+    await db.promise().query('SELECT A.id, A.first_name, A.last_name, role.title, role.salary, department.name AS department, CONCAT_WS(" ", B.first_name, B.last_name) AS manager FROM employee A LEFT JOIN employee B ON A.manager_id=B.id INNER JOIN role ON A.role_id=role.id INNER JOIN department ON role.department_id=department.id').then( (results) =>  {
         console.table(results[0]);
     });
     mainMenu(); // return to main menu
