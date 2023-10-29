@@ -21,3 +21,5 @@ THEN I am prompted to select an employee to update and their new role and this i
 SCHEMA ERRORS:
 https://stackoverflow.com/questions/13257815/key-column-doesnt-exist-in-table-when-trying-to-define-foreign-key
 * PRIMARY KEY autoincrement error: https://stackoverflow.com/questions/25865104/field-id-doesnt-have-a-default-value
+
+* Add value: https://stackoverflow.com/questions/65415706/how-to-get-index-value-of-choice-made-with-inquirer

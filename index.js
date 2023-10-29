@@ -197,15 +197,52 @@ async function addEmployee() {
             choices: managers,
         },
     ]).then(async function (response) {
-        let roleid = 0;
-        for (let i = 0; i < roles.length; i++) {
-            if (response.newRole == roles[i].title) {
-                roleid = i + 1;
-            }
-        };
-        let mgrid = response.newMgr;
-        console.log("response.newMgr.value: ", mgrid);
         await db.promise().query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${response.newFirst}", "${response.newLast}", ${response.newRole}, ${response.newMgr})`).then( (results) => {
+            console.log(results[0]);
+        });
+    });
+    mainMenu(); // return to main menu
+}
+
+// UPDATE EMPLOYEE ROLE
+async function updateEmployeeRole() {
+    // query db for all roles and employees
+    let rolesResults = [];
+    await db.promise().query('SELECT * FROM role').then( (results) => {
+        rolesResults = results[0];
+    });
+    let otheremps = [];
+    await db.promise().query('SELECT * FROM employee').then( (results) => {
+        otheremps = results[0];
+    });
+    // Role strings
+    let roles = [];
+    for (let i = 0; i < rolesResults.length; i++) {
+        roles.push({ name: rolesResults[i].title, value: i+1 });
+    }
+    // employees string, including NULL
+    let employees = [ { name: "None", value: "NULL" } ];
+    for (let i = 0; i < otheremps.length; i++) {
+        let fullName = `${otheremps[i].first_name} ${otheremps[i].last_name}`;
+        let valueToBe = i + 1;
+        employees.push({ name: fullName, value: valueToBe });
+    }
+    //console.log("managers: ", managers);
+    await inquirer.prompt([
+        {
+            type: 'list',
+            message: 'What employee do you wish to update?',
+            name: 'newEmp',
+            choices: employees,
+        },
+        {
+            type: 'list',
+            message: 'What is their new role?',
+            name: 'newRole',
+            choices: roles,
+        },
+    ]).then(async function (response) {
+        await db.promise().query(`UPDATE employee SET role_id = ${response.newRole} WHERE id = ${response.newEmp}`).then( (results) => {
             console.log(results[0]);
         });
     });
