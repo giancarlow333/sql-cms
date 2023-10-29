@@ -80,7 +80,7 @@ function chooser(choice) {
 
 // VIEW ALL DEPARTMENTS
 async function viewAllDepartments() {
-    await db.promise().query('SELECT name FROM department').then( (results) => {
+    await db.promise().query('SELECT * FROM department').then( (results) => {
         console.table(results[0]);
     });
     mainMenu(); // return to main menu
@@ -88,7 +88,7 @@ async function viewAllDepartments() {
 
 // VIEW ALL ROLES
 async function viewAllRoles() {
-    await db.promise().query('SELECT role.title, role.salary, department.name AS department FROM role INNER JOIN department on role.department_id=department.id').then( (results) => {
+    await db.promise().query('SELECT role.id, role.title, role.salary, department.name AS department FROM role INNER JOIN department on role.department_id=department.id').then( (results) => {
         console.table(results[0]);
     });
     mainMenu(); // return to main menu
@@ -96,7 +96,7 @@ async function viewAllRoles() {
 
 // VIEW ALL EMPLOYEES
 async function viewAllEmployees() {
-    await db.promise().query('SELECT employee.first_name, employee.last_name, role.title FROM employee INNER JOIN role ON employee.role_id=role.id').then( (results) =>  {
+    await db.promise().query('SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name, employee.manager_id AS department FROM employee INNER JOIN role ON employee.role_id=role.id INNER JOIN department ON role.department_id=department.id').then( (results) =>  {
         console.table(results[0]);
     });
     mainMenu(); // return to main menu
